@@ -28,16 +28,19 @@ fi
 echo " (i) Provided file path: ${file}"
 echo " (i) Provided old_value: ${old_value}"
 echo " (i) Provided new_value: ${new_value}"
+echo ""
 
 if [ "${show_file}" == "true" ]; then
-echo "------------------------------------------"
-echo "------------------------------------------"
-echo "------------------------------------------"
-echo "-------------OLD  FILE--------------------"
-echo "------------------------------------------"
-echo "------------------------------------------"
-echo "------------------------------------------"
-cat ${file}
+    echo ""
+    echo "------------------------------------------"
+    echo "------------------------------------------"
+    echo "------------------------------------------"
+    echo "-------------OLD  FILE--------------------"
+    echo "------------------------------------------"
+    echo "------------------------------------------"
+    echo "------------------------------------------"
+    echo ""
+    cat ${file}
 fi
 
 # ---------------------
@@ -45,17 +48,59 @@ fi
 
 # verbose / debug print commands
 #set -v
-sed -i -e 's/${old_value}/${new_value}/g' ${file}
+{
+    echo " (i) Finding line(s) with old value..." 
+    
+    result=$(ls -l | grep -n "$old_value" ${file})
+    if [ "$result" ]; then
+        echo " (i) Found line(s):"
+        echo "$result"
+        #found='true'
+    else 
+        echo " (e) Old value not found"
+        if [ "${notfound_exit}" == "true" ]; then
+            exit 1
+            else
+            exit 0
+        fi
+    fi
+} || { 
+echo "exiting..."
+}
+
+#if [ "${found}" ] ; then
+ 
+echo " (i) Replacing..."
+sed -i '' -e 's%'"$old_value"'%'"$new_value"'%g' ${file}
+echo " (i) Done"
+
+
+{
+    echo " (i) Finding line(s) with old value..." 
+    
+    resultNew=$(ls -l | grep -n "$new_value" ${file})
+    if [ "$resultNew" ]; then
+        echo " (i) Found line(s):"
+        echo "$resultNew"
+    else 
+        echo " (e) New value not found."
+        echo " (e) Replacing failed"
+        exit 1
+    fi
+} || { 
+echo "exiting..." 
+}
+
 
 if [ "${show_file}" == "true" ]; then
-echo "------------------------------------------"
-echo "------------------------------------------"
-echo "------------------------------------------"
-echo "-------------NEW  FILE--------------------"
-echo "------------------------------------------"
-echo "------------------------------------------"
-echo "------------------------------------------"
-cat ${file}
+    echo ""
+    echo "------------------------------------------"
+    echo "------------------------------------------"
+    echo "------------------------------------------"
+    echo "-------------NEW  FILE--------------------"
+    echo "------------------------------------------"
+    echo "------------------------------------------"
+    echo "------------------------------------------"
+    echo ""
+    cat ${file}
 fi
-
-# ==> Bundler version patched in Info.plist file for iOS project

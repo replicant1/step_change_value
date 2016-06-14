@@ -3,10 +3,11 @@ default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 
 app:
   envs:
-  - file: "Info.plist"
-  - old_value: "1.0.0"
-  - new_value: "2"
-  - append_version: "true"
+  - file: "./Consts.cs"
+  - old_value: ApiBaseAddress = "https://example.com"
+  - new_value: ApiBaseAddress = "https://api.example.org"
+  - show_file: 'false'
+  - notfound_exit: 'false'
 
 workflows:
   test:
@@ -25,10 +26,11 @@ workflows:
     - path::./:
         run_if: true
         inputs:
-        - file: "Info.plist"
-        - old_value: SERVER_URL = "http://example.org";
-        - new_value: SERVER_URL = "https://api.example.com";
-        - show_file: "true"
+        - file: $file
+        - old_value: $old_value
+        - new_value: $new_value
+        - show_file: $show_file
+        - notfound_exit: $notfound_exit
 
   # ----------------------------------------------------------------
   # --- workflows to Share this step into a Step Library
