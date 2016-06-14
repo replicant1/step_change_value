@@ -45,7 +45,7 @@ fi
 
 # verbose / debug print commands
 #set -v
-sed -i -e 's/'${old_value}'/'${new_value}'/g' ${file}
+sed -i -e 's/${old_value}/${new_value}/g' ${file}
 
 if [ "${show_file}" == "true" ]; then
 echo "------------------------------------------"
