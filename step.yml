@@ -3,9 +3,9 @@ summary: |-
   Change value in file. (e.g. constants)
 description: |-
   Change value in file. (e.g. constants)
-website: https://github.com/BOOMik/steps-set-ios-version
-source_code_url: https://github.com/BOOMik/steps-set-ios-version
-support_url: https://github.com/BOOMik/steps-set-ios-version/issues
+website: https://github.com/BOOMik/step_change_value
+source_code_url: https://github.com/BOOMik/step_change_value
+support_url: https://github.com/BOOMik/step_change_value/issues
 source:
   git: https://github.com/BOOMik/steps-set-ios-version.git
 type_tags:
@@ -15,7 +15,6 @@ type_tags:
   - ios
   - android
   - code
-run_if: ".IsCI"
 inputs:
   - file:
     opts:
