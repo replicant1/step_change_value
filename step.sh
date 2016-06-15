@@ -76,7 +76,7 @@ echo " (i) Done"
 
 
 {
-    echo " (i) Finding line(s) with old value..." 
+    echo " (i) Finding line(s) with new value..." 
     
     resultNew=$(ls -l | grep -n "$new_value" ${file})
     if [ "$resultNew" ]; then
